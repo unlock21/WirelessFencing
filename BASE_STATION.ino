@@ -3,7 +3,7 @@
 #include <SoftwareSerial.h>
 
 #if defined(BOARD_RTL8710)
-SoftwareSerial mySerial(17, 5); // RX, TX
+SoftwareSerial mySerial(17, 5); // RX, TX1
 #else
 SoftwareSerial mySerial(0, 1); // RX, TX
 #endif
@@ -13,7 +13,7 @@ char pass[] = "123456789"; // AP Password
 char channel[] = "11"; // AP Channel
 int status = WL_IDLE_STATUS; // AP Status
 unsigned int localPort = 2390; // UDP Server Port
-WiFiUDP UDP; // UPD Server Instance
+WiFiUDP UDP; // UDP Server Instance
 char packetBuffer[255]; // RX Buffer
 char ReplyBuffer[255]; // TX Buffer
 bool isGameRunning = false;
@@ -24,12 +24,13 @@ char start[] = "GAME START";
 
 void setup() {
   int loopCount = 0;
+
   
-  //Initialize Searial
-  Serial.begin(9600);
+  //Initialize Serial
+  Serial.begin(9600); // May Require 38400 BAUD
   while (!Serial) {}
 
-  // Starte AP
+  // Start AP
   while (status != WL_CONNECTED) {
     if (loopCount < 5) {
       Serial.print("STARTING! ATTEMPT: ");
@@ -49,7 +50,7 @@ void setup() {
   printWifiData();
   printCurrentNet();
 
-  // Start UPD Server
+  // Start UDP Server
   UDP.begin(localPort);
 
   // Start Serial Communication
@@ -120,6 +121,7 @@ void printCurrentNet() {
 }
 
 void startGame() {
+
 }
 
 void 
